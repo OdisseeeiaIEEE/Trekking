@@ -7,30 +7,26 @@
 class Motor
 {
   public:
-    Motor(int pinA, int pinB);
+    Motor(int pinA, int pinB, int pinC, int pinD);
 
-    void iniciar(int pinA, int pinB);
     void frente();
     void re();
 
   private:
-    int _pinA, _pinB; //precisa dessas var?
+    int _pinA, _pinB, _pinC, _pinD;
 };
 
-Motor::Motor(int pinA, int pinB)
+Motor::Motor(int pinA, int pinB, int pinC, int pinD)
 {
   pinMode(pinA, OUTPUT);
   pinMode(pinB, OUTPUT);
-  _pinA = pinA;
-  _pinB = pinB;
-}
+  pinMode(pinC, OUTPUT);
+  pinMode(pinD, OUTPUT);
 
-void Motor::iniciar(int pinA, int pinB)
-{
-  pinMode(pinA, OUTPUT);
-  pinMode(pinB, OUTPUT);
   _pinA = pinA;
   _pinB = pinB;
+  _pinC = pinC;
+  _pinD = pinD;
 }
 
 void Motor::frente ()
@@ -61,10 +57,10 @@ class serial
     serial(int baud_rate);
 
     void main();
-    char r; //armazenar char lido
-    string reading; //armazenar array char lido
 
   private:
+    char r; //armazenar char lido
+    String reading = ""; //armazenar array char lido
 };
 
 serial::serial(int baud_rate)
@@ -72,12 +68,12 @@ serial::serial(int baud_rate)
   Serial.begin(baud_rate);
 }
 
-serial::main()
+void serial::main()
 {
-  whilea(Serial.available > 0)
-  {
-    r = Serial.read();
-
-    //se r for igual a ";" significa que a leitura foi terminada
-  }
+  // while(Serial.available)
+  // {
+  //   r = Serial.read();
+  //
+  //   //se r for igual a ";" significa que a leitura foi terminada
+  // }
 }
