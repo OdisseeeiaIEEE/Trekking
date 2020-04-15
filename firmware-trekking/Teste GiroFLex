@@ -1,0 +1,28 @@
+#define giroflexA 8
+ #define giroflexB 10
+ #define led 13
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(led,OUTPUT);
+  pinMode (giroflexA, OUTPUT);
+  pinMode (giroflexB, OUTPUT);
+}
+void loop()
+{
+  int valor_recebido;
+  valor_recebido = Serial.read();
+  if(valor_recebido == '1')
+  {
+ digitalWrite(giroflexA,HIGH);
+ digitalWrite(giroflexB,LOW);
+ digitalWrite(led,HIGH);
+ Serial.println("Cirene ligada!");
+  }
+  if(valor_recebido == '2')
+  {
+   digitalWrite(giroflexA,LOW);
+   digitalWrite(giroflexB,LOW);
+   Serial.println("Cirene desligada!");
+}
+}
