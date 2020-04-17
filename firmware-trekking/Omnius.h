@@ -36,17 +36,30 @@ Motor::Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF)
 
 void Motor::frente ()
 {
-
+   digitalWrite(_pinA, LOW);
+   digitalWrite(_pinB, HIGH);
+   digitalWrite(_pinC, LOW);
+   digitalWrite(_pinD, HIGH);
 }
 
 void Motor::re ()
 {
-
+   digitalWrite(_pinA, HIGH);
+   digitalWrite(_pinB, LOW);
+   digitalWrite(_pinC, HIGH);
+   digitalWrite(_pinD, LOW);
+ 
 }
 
-void Motor::virar ()
+void Motor::virarDireita ()
 {
-
+   digitalWrite(_pinE, LOW);
+   digitalWrite(_pinF, HIGH);
+}
+void Motor::virarEsquerda ()
+{
+   digitalWrite(_pinE, HIGH);
+   digitalWrite(_pinF, LOW);
 }
 
 
