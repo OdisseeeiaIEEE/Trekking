@@ -7,26 +7,31 @@
 class Motor
 {
   public:
-    Motor(int pinA, int pinB, int pinC, int pinD);
+    Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF);
 
     void frente();
     void re();
+    void virar();
 
   private:
-    int _pinA, _pinB, _pinC, _pinD;
+    int _pinA, _pinB, _pinC, _pinD, _pinE, _pinF;
 };
 
-Motor::Motor(int pinA, int pinB, int pinC, int pinD)
+Motor::Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF)
 {
   pinMode(pinA, OUTPUT);
   pinMode(pinB, OUTPUT);
   pinMode(pinC, OUTPUT);
   pinMode(pinD, OUTPUT);
+  pinMode(pinE, OUTPUT);
+  pinMode(pinF, OUTPUT);
 
   _pinA = pinA;
   _pinB = pinB;
   _pinC = pinC;
   _pinD = pinD;
+  _pinE = pinE;
+  _pinF = pinF;
 }
 
 void Motor::frente ()
@@ -35,6 +40,11 @@ void Motor::frente ()
 }
 
 void Motor::re ()
+{
+
+}
+
+void Motor::virar ()
 {
 
 }
@@ -51,29 +61,62 @@ e retornar seu valor.
 "tipo"="valor";
 */
 
-class serial
+class Omnius
 {
   public:
-    serial(int baud_rate);
+    Omnius();
 
-    void main();
+    void serial_baudrate(int baud_rate);
+    void serial_reading();
+    int serial_return(String procurar);
 
   private:
+    bool stop = false;
     char r; //armazenar char lido
     String reading = ""; //armazenar array char lido
 };
 
-serial::serial(int baud_rate)
+Omnius::Omnius()
+{
+  Serial.begin(115200); //baud_rate padrao
+}
+
+void Omnius::serial_baudrate(int baud_rate)
 {
   Serial.begin(baud_rate);
 }
 
-void serial::main()
+void Omnius::serial_reading()
 {
-  // while(Serial.available)
-  // {
-  //   r = Serial.read();
-  //
-  //   //se r for igual a ";" significa que a leitura foi terminada
-  // }
+  reading = "";
+
+  while ((Serial.available() > 0) && !stop) //enquanto tiver informacao para ler e stop == false
+  {
+    r = Serial.read(); //faz leitura do ultimo char
+    
+    if(r == ';') // ; indica que acabou a leitura
+      stop = true;
+    else
+      reading += r;  //preencher a string 
+  }
+
+  stop = false;
 }
+
+int Omnius::serial_return(String procurar)
+{
+  if(reading.indexOf("procurar") >= 0) //indexOf retorna o indice que começa a string procurar
+  {
+    String _read = reading.substring(reading.indexOf("=") + 1, reading.indexOf(";"));
+
+    return _read.toInt();
+  }
+  else
+    return -1;
+}
+
+
+
+
+
+
