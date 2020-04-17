@@ -61,8 +61,12 @@ void Motor::virarEsquerda ()
    digitalWrite(_pinE, HIGH);
    digitalWrite(_pinF, LOW);
 }
+void Motor::centralizar ()
+{
+  digitalWrite(_pinE, LOW);
+  digitalWrite(_pinF, LOW);
 
-
+}
 /*********************************/
 /*       Comunicação Serial      */
 /*********************************/
