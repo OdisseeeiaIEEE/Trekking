@@ -11,7 +11,9 @@ class Motor
 
     void frente();
     void re();
-    void virar();
+    void virarDireita();
+    void virarEsquerda();
+    void centralizar();
 
   private:
     int _pinA, _pinB, _pinC, _pinD, _pinE, _pinF;
@@ -36,19 +38,31 @@ Motor::Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF)
 
 void Motor::frente ()
 {
-   digitalWrite(_pinA, LOW);
-   digitalWrite(_pinB, HIGH);
-   digitalWrite(_pinC, LOW);
-   digitalWrite(_pinD, HIGH);
+  if(traDian)
+  {
+    digitalWrite(_pinA, LOW);
+    digitalWrite(_pinB, HIGH);
+  }
+  if(traTras)
+  {
+    digitalWrite(_pinC, LOW);
+    digitalWrite(_pinD, HIGH);
+  }
 }
 
 void Motor::re ()
 {
-   digitalWrite(_pinA, HIGH);
-   digitalWrite(_pinB, LOW);
-   digitalWrite(_pinC, HIGH);
-   digitalWrite(_pinD, LOW);
- 
+  if(traDian)
+  {
+    digitalWrite(_pinA, HIGH);
+    digitalWrite(_pinB, LOW);
+  }
+  if(traTras)
+  {
+    digitalWrite(_pinC, HIGH);
+    digitalWrite(_pinD, LOW);
+  }
+
 }
 
 void Motor::virarDireita ()
@@ -56,17 +70,21 @@ void Motor::virarDireita ()
    digitalWrite(_pinE, LOW);
    digitalWrite(_pinF, HIGH);
 }
+
 void Motor::virarEsquerda ()
 {
    digitalWrite(_pinE, HIGH);
    digitalWrite(_pinF, LOW);
 }
+
 void Motor::centralizar ()
 {
   digitalWrite(_pinE, LOW);
   digitalWrite(_pinF, LOW);
 
 }
+
+
 /*********************************/
 /*       Comunicação Serial      */
 /*********************************/
@@ -110,11 +128,11 @@ void Omnius::serial_reading()
   while ((Serial.available() > 0) && !stop) //enquanto tiver informacao para ler e stop == false
   {
     r = Serial.read(); //faz leitura do ultimo char
-    
+
     if(r == ';') // ; indica que acabou a leitura
       stop = true;
     else
-      reading += r;  //preencher a string 
+      reading += r;  //preencher a string
   }
 
   stop = false;
@@ -131,9 +149,3 @@ int Omnius::serial_return(String procurar)
   else
     return -1;
 }
-
-
-
-
-
-
