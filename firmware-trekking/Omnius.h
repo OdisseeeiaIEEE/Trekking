@@ -8,6 +8,7 @@ class Motor
 {
   public:
     Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF);
+    int valor_pwm;
 
     void frente();
     void re();
@@ -17,6 +18,7 @@ class Motor
 
   private:
     int _pinA, _pinB, _pinC, _pinD, _pinE, _pinF;
+    int _valor_pwm;
 };
 
 Motor::Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF)
@@ -34,19 +36,21 @@ Motor::Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF)
   _pinD = pinD;
   _pinE = pinE;
   _pinF = pinF;
+  _valor_pwm = valor_pwm; 
 }
 
 void Motor::frente ()
 {
+  
   if(traDian)
   {
-    digitalWrite(_pinA, LOW);
-    digitalWrite(_pinB, HIGH);
+    analogWrite(_pinA, _valor_pwm);
+    analogWrite(_pinB, 0);
   }
   if(traTras)
   {
-    digitalWrite(_pinC, LOW);
-    digitalWrite(_pinD, HIGH);
+    analogWrite(_pinC, _valor_pwm);
+    analogWrite(_pinD, 0);
   }
 }
 
@@ -54,13 +58,13 @@ void Motor::re ()
 {
   if(traDian)
   {
-    digitalWrite(_pinA, HIGH);
-    digitalWrite(_pinB, LOW);
+    analogWrite(_pinA, 0);
+    analogWrite(_pinB, _valor_pwm);
   }
   if(traTras)
   {
-    digitalWrite(_pinC, HIGH);
-    digitalWrite(_pinD, LOW);
+   analogWrite (_pinC, 0);
+   analogWrite (_pinD, _valor_pwm);
   }
 
 }
@@ -83,6 +87,57 @@ void Motor::centralizar ()
   digitalWrite(_pinF, LOW);
 
 }
+
+/*********************************/
+/*             Sensores          */
+/*********************************/
+
+
+class Sensores
+{
+  public:
+   Sensores(int pinSA, int pinSB, int pinSC);
+
+    void Leitura ();
+    void Filtros();
+    
+
+  private:
+    int _pinSA, _pinSB, _pinSC;
+};
+
+Sensores::Sensores(int pinSA, int pinSB, int pinSC)
+{
+  pinMode(pinSA, INPUT);
+  pinMode(pinSB, INPUT);
+  pinMode(pinSC, INPUT);
+ 
+
+  _pinSA = pinSA;
+  _pinSB = pinSB;
+  _pinSC = pinSC;
+  
+}
+
+void Sensores::Leitura ()
+{
+  if(leituraEsquerda)
+  {
+       digitalRead(_pinSA);
+  }
+  if(leituraCentral)
+  {
+      digitalRead(_pinSB);
+  }
+   if(leituraDireita) 
+   {
+      digitalRead(_pinSC);
+   }
+ }
+ void Sensores::Filtros()
+ {
+ 
+ }
 
 
 /*********************************/
