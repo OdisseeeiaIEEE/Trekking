@@ -33,6 +33,9 @@ V:        Feito e testado
 
 #define traDian true     //tracao dianteira
 #define traTras true     //tracao traseira
+#define leituraEsquerda true //Sensor Esquerdo(olhando o carrinho de tras)
+#define leituraCentral true //Sensor Central
+#define leituraDireita true //Sensor Direito
 
 
 #include "Omnius.h"
