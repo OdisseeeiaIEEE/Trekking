@@ -10,8 +10,8 @@ class Motor
     Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF);
     int valor_pwm;
 
-    void frente();
-    void re();
+    void frente (int valor_pwm);
+    void re (int valor_pwm);
     void virarDireita();
     void virarEsquerda();
     void centralizar();
@@ -39,9 +39,10 @@ Motor::Motor(int pinA, int pinB, int pinC, int pinD, int pinE, int pinF)
   _valor_pwm = valor_pwm; 
 }
 
-void Motor::frente ()
+void Motor::frente (int _valor_pwm)
 {
-  
+ _valor_pwm = map(_valor_pwm, 0, 100, 0, 255);//Função para tranformar o valor dado em % em um numero de 0-255 bits
+ _valor_pwm = constrain(_valor_pwm, 0, 255); //Função para restringir o valor de 0-255
   if(traDian)
   {
     analogWrite(_pinA, _valor_pwm);
@@ -54,8 +55,10 @@ void Motor::frente ()
   }
 }
 
-void Motor::re ()
+void Motor::re (int _valor_pwm)
 {
+  _valor_pwm = map(_valor_pwm, 0, 100, 0, 255); //Função para tranformar o valor dado em % em um numero de 0-255 bits
+  _valor_pwm = constrain(_valor_pwm, 0, 255); //Função para restringir o valor de 0-255
   if(traDian)
   {
     analogWrite(_pinA, 0);
